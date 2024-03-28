@@ -10,7 +10,7 @@ class ShopServiceTest {
     @Test
     void addOrderTest() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        ShopService shopService = new ShopService(new ProductRepo(), new OrderMapRepo());
         List<String> productsIds = List.of("1");
 
         //WHEN
@@ -30,7 +30,7 @@ class ShopServiceTest {
     @Test
     void addOrderTest_whenInvalidProductId_expectNull() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        ShopService shopService = new ShopService(new ProductRepo(), new OrderMapRepo());
         List<String> productsIds = List.of("1", "2");
 
         //WHEN / THEN
@@ -41,7 +41,7 @@ class ShopServiceTest {
     @Test
     void getAllOrdersWithStatus_whenAdd1Order_expects1WithOrderStatusProcessing() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        ShopService shopService = new ShopService(new ProductRepo(), new OrderMapRepo());
         List<String> productsIds = List.of("1");
         Order order = null;
         try {
@@ -61,7 +61,7 @@ class ShopServiceTest {
     @Test
     void getAllOrdersWithStatus_whenAdd1Order_expectsNoWithOrderStatusCompleted() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        ShopService shopService = new ShopService(new ProductRepo(), new OrderMapRepo());
         List<String> productsIds = List.of("1");
         try {
             shopService.addOrder(productsIds);
@@ -79,7 +79,7 @@ class ShopServiceTest {
     @Test
     void updateOrder_whenUpdatesExistingOrderWithStatusCompleted_expectOrderCompleted() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        ShopService shopService = new ShopService(new ProductRepo(), new OrderMapRepo());
         List<String> productsIds = List.of("1");
         Order order = null;
         try {
@@ -105,7 +105,7 @@ class ShopServiceTest {
     @Test
     void updateOrder_whenUpdatesNonexistingOrderWithStatusCompleted_expectNull() {
         //GIVEN
-        ShopService shopService = new ShopService();
+        ShopService shopService = new ShopService(new ProductRepo(), new OrderMapRepo());
         List<String> productsIds = List.of("1");
         try {
             shopService.addOrder(productsIds);

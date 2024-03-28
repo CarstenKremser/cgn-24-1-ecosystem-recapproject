@@ -29,4 +29,10 @@ public class ShopService {
                 .filter(order -> order.status().equals(orderStatus))
                 .toList();
     }
+
+    public Order updateOrder(String id, OrderStatus newStatus) {
+        return (orderRepo.getOrderById(id) != null)
+            ? orderRepo.getOrderById(id).withStatus(newStatus)
+            : null;
+    }
 }

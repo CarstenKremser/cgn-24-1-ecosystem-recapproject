@@ -74,4 +74,44 @@ class ShopServiceTest {
         //THEN
         assertEquals(0, actual.size());
     }
+
+    @Test
+    void updateOrder_whenUpdatesExistingOrderWithStatusCompleted_expectOrderCompleted() {
+        //GIVEN
+        ShopService shopService = new ShopService();
+        List<String> productsIds = List.of("1");
+        Order order = null;
+        try {
+            order = shopService.addOrder(productsIds);
+        } catch (ProductDoesNotExistException e) {
+            fail();
+        }
+
+        //WHEN
+        Order actual = shopService.updateOrder(order.id(), OrderStatus.COMPLETED);
+
+        //THEN
+        assertNotSame(order, actual); // nicht identische Objekte
+        assertEquals(order.id(), actual.id());
+        assertEquals(OrderStatus.COMPLETED, actual.status());
+        assertEquals(order.products(), actual.products());
+    }
+
+    @Test
+    void updateOrder_whenUpdatesNonexistingOrderWithStatusCompleted_expectNull() {
+        //GIVEN
+        ShopService shopService = new ShopService();
+        List<String> productsIds = List.of("1");
+        try {
+            shopService.addOrder(productsIds);
+        } catch (ProductDoesNotExistException e) {
+            fail();
+        }
+
+        //WHEN
+        Order actual = shopService.updateOrder("unknownId", OrderStatus.COMPLETED);
+
+        //THEN
+        assertNull(actual);
+    }
 }

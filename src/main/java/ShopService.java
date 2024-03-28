@@ -32,8 +32,11 @@ public class ShopService {
     }
 
     public Order updateOrder(String id, OrderStatus newStatus) {
-        return (orderRepo.getOrderById(id) != null)
-            ? orderRepo.getOrderById(id).withStatus(newStatus)
-            : null;
+        if (orderRepo.getOrderById(id) != null) {
+            Order updatedOrder = orderRepo.getOrderById(id).withStatus(newStatus);
+            orderRepo.updateOrder(updatedOrder);
+            return updatedOrder;
+        }
+        return null;
     }
 }

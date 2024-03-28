@@ -78,4 +78,22 @@ class OrderMapRepoTest {
         //THEN
         assertNull(repo.getOrderById("1"));
     }
+
+    @Test
+    void updateOrder() {
+        //GIVEN
+        OrderMapRepo repo = new OrderMapRepo();
+        Product product = new Product("1", "Apfel");
+        Order newOrder = new Order("1", OrderStatus.PROCESSING, List.of(product));
+        Order addedOrder = repo.addOrder(newOrder);
+        Order changedOrder = addedOrder.withStatus(OrderStatus.COMPLETED);
+        repo.updateOrder(changedOrder);
+        Order expected = changedOrder;
+
+        //WHEN
+        Order actual = repo.getOrderById(addedOrder.id());
+
+        //THEN
+        assertEquals(expected, actual);
+    }
 }

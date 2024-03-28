@@ -84,7 +84,7 @@ class OrderMapRepoTest {
         //GIVEN
         OrderMapRepo repo = new OrderMapRepo();
         Product product = new Product("1", "Apfel");
-        Order newOrder = new Order("1", OrderStatus.PROCESSING, List.of(product));
+        Order newOrder = new Order("1", OrderStatus.PROCESSING, Instant.now(), List.of(product));
         Order addedOrder = repo.addOrder(newOrder);
         Order changedOrder = addedOrder.withStatus(OrderStatus.COMPLETED);
         repo.updateOrder(changedOrder);

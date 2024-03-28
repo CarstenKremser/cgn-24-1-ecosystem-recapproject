@@ -1,12 +1,16 @@
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 public class ShopService {
-    private ProductRepo productRepo = new ProductRepo();
-    private OrderRepo orderRepo = new OrderMapRepo();
+    @NonNull private ProductRepo productRepo;
+    @NonNull private OrderRepo orderRepo;
 
     public Order addOrder(List<String> productIds) throws ProductDoesNotExistException {
         List<Product> products = new ArrayList<>();

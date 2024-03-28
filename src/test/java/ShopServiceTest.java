@@ -13,7 +13,12 @@ class ShopServiceTest {
         List<String> productsIds = List.of("1");
 
         //WHEN
-        Order actual = shopService.addOrder(productsIds);
+        Order actual = null;
+        try {
+            actual = shopService.addOrder(productsIds);
+        } catch (ProductDoesNotExistException e) {
+            fail();
+        }
 
         //THEN
         Order expected = new Order("-1", OrderStatus.PROCESSING, List.of(new Product("1", "Apfel")));
@@ -27,11 +32,9 @@ class ShopServiceTest {
         ShopService shopService = new ShopService();
         List<String> productsIds = List.of("1", "2");
 
-        //WHEN
-        Order actual = shopService.addOrder(productsIds);
-
-        //THEN
-        assertNull(actual);
+        //WHEN / THEN
+        assertThrows(ProductDoesNotExistException.class,
+                ()-> shopService.addOrder(productsIds));
     }
 
     @Test
@@ -39,7 +42,12 @@ class ShopServiceTest {
         //GIVEN
         ShopService shopService = new ShopService();
         List<String> productsIds = List.of("1");
-        Order order = shopService.addOrder(productsIds);
+        Order order = null;
+        try {
+            order = shopService.addOrder(productsIds);
+        } catch (ProductDoesNotExistException e) {
+            fail();
+        }
 
         //WHEN
         List<Order> actual = shopService.getAllOrdersWithStatus(OrderStatus.PROCESSING);
@@ -54,7 +62,11 @@ class ShopServiceTest {
         //GIVEN
         ShopService shopService = new ShopService();
         List<String> productsIds = List.of("1");
-        Order order = shopService.addOrder(productsIds);
+        try {
+            shopService.addOrder(productsIds);
+        } catch (ProductDoesNotExistException e) {
+            fail();
+        }
 
         //WHEN
         List<Order> actual = shopService.getAllOrdersWithStatus(OrderStatus.COMPLETED);

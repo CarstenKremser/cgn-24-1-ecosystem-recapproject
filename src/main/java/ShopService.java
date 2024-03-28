@@ -2,9 +2,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class ShopService {
@@ -42,5 +40,22 @@ public class ShopService {
             return updatedOrder;
         }
         return null;
+    }
+
+    public Map<OrderStatus,Order> getOldestOrderPerStatus() {
+        Map<OrderStatus,Order> result = new HashMap<>();
+        for (OrderStatus orderStatus : OrderStatus.values()) {
+            result.put(orderStatus,
+                getAllOrdersWithStatus(orderStatus)
+                    .stream()
+                    .reduce(null,
+                            (previous,current) -> (previous == null
+                                    || current.orderTime().isBefore(previous.orderTime())
+                                    ? current
+                                    : previous)
+                    )
+            );
+        }
+        return result;
     }
 }

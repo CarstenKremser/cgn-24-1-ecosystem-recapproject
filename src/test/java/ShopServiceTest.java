@@ -88,9 +88,13 @@ class ShopServiceTest {
         }
 
         //WHEN
-        Order actual = shopService.updateOrder(order.id(), OrderStatus.COMPLETED);
+        Order newOrder = shopService.updateOrder(order.id(), OrderStatus.COMPLETED);
+        List<Order> actualOrders = shopService.getAllOrdersWithStatus(OrderStatus.COMPLETED);
 
         //THEN
+        assertNotNull(actualOrders);
+        assertEquals(1, actualOrders.size());
+        Order actual = actualOrders.get(0);
         assertNotSame(order, actual); // nicht identische Objekte
         assertEquals(order.id(), actual.id());
         assertEquals(OrderStatus.COMPLETED, actual.status());

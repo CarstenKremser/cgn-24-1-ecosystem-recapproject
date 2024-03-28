@@ -5,12 +5,12 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 public class ShopService {
     @NonNull private ProductRepo productRepo;
     @NonNull private OrderRepo orderRepo;
+    @NonNull private IdService idService;
 
     public Order addOrder(List<String> productIds) throws ProductDoesNotExistException {
         List<Product> products = new ArrayList<>();
@@ -22,7 +22,7 @@ public class ShopService {
             products.add(productToOrder.get());
         }
 
-        Order newOrder = new Order(UUID.randomUUID().toString(), OrderStatus.PROCESSING, Instant.now(), products);
+        Order newOrder = new Order(idService.generateId().toString(), OrderStatus.PROCESSING, Instant.now(), products);
 
         return orderRepo.addOrder(newOrder);
     }

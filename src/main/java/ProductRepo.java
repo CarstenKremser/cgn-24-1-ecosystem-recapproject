@@ -15,12 +15,10 @@ public class ProductRepo {
     }
 
     public Optional<Product> getProductById(String id) {
-        for (Product product : products) {
-            if (product.id().equals(id)) {
-                return Optional.of(product);
-            }
-        }
-        return Optional.empty();
+        return products
+                .stream()
+                .filter(product -> product.id().equals(id))
+                .findFirst();
     }
 
     public Product addProduct(Product newProduct) {

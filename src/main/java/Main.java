@@ -36,6 +36,6 @@ public class Main {
         System.out.println(shopService.getAllOrdersWithStatus(OrderStatus.PROCESSING));
 
         CommandLineInterpreter cli = new CommandLineInterpreter();
-        // cli.doSomethingWithFile("transactions.txt");
+        cli.executeFile("transactions.txt");
     }
 }

@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -23,6 +25,11 @@ public class Main {
             productRepo.addProduct(product);
         }
         CommandLineInterpreter cli = new CommandLineInterpreter();
-        cli.executeFile("transactions.txt");
+        String fileName = "transactions.txt";
+        try {
+            cli.executeFile(fileName);
+        } catch (FileNotFoundException e) {
+            System.out.println("could not find file '" + fileName + "'");
+        }
     }
 }

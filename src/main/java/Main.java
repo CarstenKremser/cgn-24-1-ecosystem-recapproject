@@ -1,5 +1,3 @@
-import java.util.List;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -24,18 +22,6 @@ public class Main {
         for (Product product:products) {
             productRepo.addProduct(product);
         }
-        /*
-        try {
-            shopService.addOrder(List.of("a","b"));
-            shopService.addOrder(List.of("b","c"));
-            shopService.addOrder(List.of("c","d"));
-            shopService.addOrder(List.of("d","e"));
-            shopService.addOrder(List.of("a","e","b","d","c"));
-        } catch (ProductDoesNotExistException e) {
-            System.out.println("Exception: " + e);
-        }
-        System.out.println(shopService.getAllOrdersWithStatus(OrderStatus.PROCESSING));
-        */
         CommandLineInterpreter cli = new CommandLineInterpreter();
         cli.executeFile("transactions.txt");
     }

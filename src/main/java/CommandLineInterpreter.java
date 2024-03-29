@@ -44,6 +44,10 @@ public class CommandLineInterpreter {
     }
 
     private void executeCommandAddOrder(String[] splittedLine) {
+        if (splittedLine.length < 3) {
+            System.out.println("command has too few parameters: " + Arrays.toString(splittedLine));
+            return;
+        }
         String orderAlias = splittedLine[1];
         List<String> productIds = Arrays.stream(splittedLine)
                 .skip(2)

@@ -1,12 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class CommandLineInterpreter {
     private final ShopService shopService;
+    private final Map<String,String> aliasToOrderId = new HashMap<>();
 
     public CommandLineInterpreter(ShopService shopService) {
         this.shopService = shopService;
@@ -46,7 +44,16 @@ public class CommandLineInterpreter {
     }
 
     private void executeCommandAddOrder(String[] splittedLine) {
-
+        String orderAlias = splittedLine[1];
+        List<String> productIds = Arrays.stream(splittedLine)
+                .skip(2)
+                .toList();
+        try {
+            Order newOrder = shopService.addOrder(productIds);
+            aliasToOrderId.put(orderAlias, newOrder.id());
+        } catch (ProductDoesNotExistException e) {
+            System.out.println("cannot add Order - reason: " + e);
+        }
     }
 
     private void executeCommandSetStatus(String[] splittedLine) {

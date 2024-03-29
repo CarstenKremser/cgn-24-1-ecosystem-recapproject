@@ -24,6 +24,7 @@ public class Main {
         for (Product product:products) {
             productRepo.addProduct(product);
         }
+        /*
         try {
             shopService.addOrder(List.of("a","b"));
             shopService.addOrder(List.of("b","c"));
@@ -34,7 +35,7 @@ public class Main {
             System.out.println("Exception: " + e);
         }
         System.out.println(shopService.getAllOrdersWithStatus(OrderStatus.PROCESSING));
-
+        */
         CommandLineInterpreter cli = new CommandLineInterpreter();
         cli.executeFile("transactions.txt");
     }

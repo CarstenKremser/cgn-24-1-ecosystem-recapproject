@@ -1,5 +1,11 @@
 public enum ShopServiceCommand {
-    ADD_ORDER,
-    SET_STATUS,
-    PRINT_ORDERS;
+    ADD_ORDER("addOrder"),
+    SET_STATUS("setStatus"),
+    PRINT_ORDERS("printOrders");
+
+    public final String command;
+
+    ShopServiceCommand(String command) {
+        this.command = command;
+    }
 }

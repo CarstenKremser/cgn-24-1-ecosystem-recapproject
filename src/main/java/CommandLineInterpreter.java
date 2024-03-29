@@ -6,6 +6,11 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class CommandLineInterpreter {
+    private final ShopService shopService;
+
+    public CommandLineInterpreter(ShopService shopService) {
+        this.shopService = shopService;
+    }
 
     public void executeFile(String fileName) throws FileNotFoundException {
         System.out.println("CommandLineInterpreter.executeFile("+fileName+")");

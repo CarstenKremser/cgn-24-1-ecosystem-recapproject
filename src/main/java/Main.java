@@ -24,7 +24,7 @@ public class Main {
         for (Product product:products) {
             productRepo.addProduct(product);
         }
-        CommandLineInterpreter cli = new CommandLineInterpreter();
+        CommandLineInterpreter cli = new CommandLineInterpreter(shopService);
         String fileName = "transactions.txt";
         try {
             cli.executeFile(fileName);

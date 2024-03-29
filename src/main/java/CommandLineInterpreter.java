@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -20,7 +21,7 @@ public class CommandLineInterpreter {
         if (line.isEmpty()) { return; }
         System.out.println(line);
         String[] splittedLine = line.split(" ");
-        getCommand(splittedLine).ifPresent(shopServiceCommand -> {executeCommand(shopServiceCommand, splittedLine);});
+        getCommand(splittedLine).ifPresent(shopServiceCommand -> executeCommand(shopServiceCommand, splittedLine));
     }
 
     private Optional<ShopServiceCommand> getCommand(String[] splittedLine) {
@@ -32,6 +33,22 @@ public class CommandLineInterpreter {
 
     private void executeCommand(ShopServiceCommand command, String[] splittedLine) {
         System.out.println("executeCommand " + command.command + " - " + Arrays.toString(splittedLine));
+        switch (command) {
+            case ADD_ORDER -> executeCommandAddOrder(splittedLine);
+            case SET_STATUS -> executeCommandSetStatus(splittedLine);
+            case PRINT_ORDERS -> executeCommandPrintOrders(splittedLine);
+        }
+    }
+
+    private void executeCommandAddOrder(String[] splittedLine) {
+
+    }
+
+    private void executeCommandSetStatus(String[] splittedLine) {
+
+    }
+
+    private void executeCommandPrintOrders(String[] splittedLine) {
 
     }
 }

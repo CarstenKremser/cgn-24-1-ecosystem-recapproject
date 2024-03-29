@@ -61,7 +61,15 @@ public class CommandLineInterpreter {
     }
 
     private void executeCommandSetStatus(String[] splittedLine) {
-
+        if (splittedLine.length != 3) {
+            System.out.println("command has wrong number of parameters: " + Arrays.toString(splittedLine));
+            return;
+        }
+        String orderAlias = splittedLine[1];
+        String status = splittedLine[2];
+        OrderStatus newOrderStatus = OrderStatus.valueOf(status);
+        Order newOrder = shopService.updateOrder(aliasToOrderId.get(orderAlias),newOrderStatus);
+        aliasToOrderId.put(orderAlias, newOrder.id());
     }
 
     private void executeCommandPrintOrders(String[] splittedLine) {

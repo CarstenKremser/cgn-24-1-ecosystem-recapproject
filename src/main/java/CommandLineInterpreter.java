@@ -10,33 +10,33 @@ public class CommandLineInterpreter {
 
     public void executeLine(String line) {
         if (line.isEmpty()) { return; }
-        String[] splittedLine = line.split(" ");
-        getCommand(splittedLine).ifPresent(shopServiceCommand -> executeCommand(shopServiceCommand, splittedLine));
+        String[] splitLine = line.split(" ");
+        getCommand(splitLine).ifPresent(shopServiceCommand -> executeCommand(shopServiceCommand, splitLine));
     }
 
-    private Optional<ShopServiceCommand> getCommand(String[] splittedLine) {
-        if(splittedLine.length == 0) { return Optional.empty(); }
+    private Optional<ShopServiceCommand> getCommand(String[] splitLine) {
+        if(splitLine.length == 0) { return Optional.empty(); }
         return Arrays.stream(ShopServiceCommand.values())
-                .filter(shopServiceCommand -> shopServiceCommand.command.equals(splittedLine[0]))
+                .filter(shopServiceCommand -> shopServiceCommand.command.equals(splitLine[0]))
                 .findFirst();
     }
 
-    private void executeCommand(ShopServiceCommand command, String[] splittedLine) {
-        System.out.println("executeCommand " + command.command + " - " + Arrays.toString(splittedLine));
+    private void executeCommand(ShopServiceCommand command, String[] splitLine) {
+        System.out.println("executeCommand " + command.command + " - " + Arrays.toString(splitLine));
         switch (command) {
-            case ADD_ORDER -> executeCommandAddOrder(splittedLine);
-            case SET_STATUS -> executeCommandSetStatus(splittedLine);
-            case PRINT_ORDERS -> executeCommandPrintOrders(splittedLine);
+            case ADD_ORDER -> executeCommandAddOrder(splitLine);
+            case SET_STATUS -> executeCommandSetStatus(splitLine);
+            case PRINT_ORDERS -> executeCommandPrintOrders(splitLine);
         }
     }
 
-    private void executeCommandAddOrder(String[] splittedLine) {
-        if (splittedLine.length < 3) {
-            System.out.println("command has too few parameters: " + Arrays.toString(splittedLine));
+    private void executeCommandAddOrder(String[] splitLine) {
+        if (splitLine.length < 3) {
+            System.out.println("command has too few parameters: " + Arrays.toString(splitLine));
             return;
         }
-        String orderAlias = splittedLine[1];
-        List<String> productIds = Arrays.stream(splittedLine)
+        String orderAlias = splitLine[1];
+        List<String> productIds = Arrays.stream(splitLine)
                 .skip(2)
                 .toList();
         try {
@@ -47,21 +47,21 @@ public class CommandLineInterpreter {
         }
     }
 
-    private void executeCommandSetStatus(String[] splittedLine) {
-        if (splittedLine.length != 3) {
-            System.out.println("command has wrong number of parameters: " + Arrays.toString(splittedLine));
+    private void executeCommandSetStatus(String[] splitLine) {
+        if (splitLine.length != 3) {
+            System.out.println("command has wrong number of parameters: " + Arrays.toString(splitLine));
             return;
         }
-        String orderAlias = splittedLine[1];
-        String status = splittedLine[2];
+        String orderAlias = splitLine[1];
+        String status = splitLine[2];
         OrderStatus newOrderStatus = OrderStatus.valueOf(status);
         Order newOrder = shopService.updateOrder(aliasToOrderId.get(orderAlias),newOrderStatus);
         aliasToOrderId.put(orderAlias, newOrder.id());
     }
 
-    private void executeCommandPrintOrders(String[] splittedLine) {
-        if (splittedLine.length != 1) {
-            System.out.println("command has wrong number of parameters: " + Arrays.toString(splittedLine));
+    private void executeCommandPrintOrders(String[] splitLine) {
+        if (splitLine.length != 1) {
+            System.out.println("command has wrong number of parameters: " + Arrays.toString(splitLine));
             return;
         }
         for (OrderStatus status : OrderStatus.values()) {

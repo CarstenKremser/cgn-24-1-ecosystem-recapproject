@@ -26,8 +26,9 @@ public class Main {
         }
         CommandLineInterpreter cli = new CommandLineInterpreter(shopService);
         String fileName = "transactions.txt";
+        BatchProcessor batchProcessor = new BatchProcessor(cli);
         try {
-            cli.executeFile(fileName);
+            batchProcessor.executeFile(fileName);
         } catch (FileNotFoundException e) {
             System.out.println("could not find file '" + fileName + "'");
         }
